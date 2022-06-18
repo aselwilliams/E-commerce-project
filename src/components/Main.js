@@ -1,13 +1,11 @@
 // import { useState } from "react";
-import { products } from "../products";
+// import { data } from "../products";
 
-const Main = ({ handleAddCart }) => {
+const Main = ({ handleAddCart,filteredProducts,filterByRange,products,filterRange,range }) => {
   return (
     <>
-      {products.map((item) => {
-        // {
-        //   console.log(item.id);
-        // }
+      {filterRange().map((item) => {
+       
         return (
           <article className="product" key={item.id}>
             <div class="product-container">

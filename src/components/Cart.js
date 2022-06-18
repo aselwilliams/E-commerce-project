@@ -57,7 +57,7 @@ function Cart({ closeCart, toggle, inCart, count, handleDelete, total }) {
           </div>
           {/* footer */}
           <footer>
-            <h3 className="cart-total text-slanted">total : ${total}</h3>
+            <h3 className="cart-total text-slanted">total : ${total.toFixed(2)}</h3>
             <button className="cart-checkout btn">checkout</button>
           </footer>
         </aside>
