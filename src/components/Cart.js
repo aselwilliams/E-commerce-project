@@ -1,4 +1,19 @@
-function Cart({ closeCart, toggle, inCart, count, handleDelete, total }) {
+function Cart({ closeCart, toggle, inCart, count, handleDelete, total,products,setInCart,setTotal,setCount }) {
+    // const Arr=[]
+    const handleIncrement=(item)=>{
+    const inCartCopy=inCart.map((el)=>(el.id===item.id ? {...el, count:el.count+1} : el))
+    setInCart(inCartCopy)
+    setCount(prevState=>prevState+1)
+    setTotal(total+(item.fields.price/100))
+    }
+    const handleDecrement=(item)=>{
+        if(item.count>1){
+            const inCartCopy=inCart.map((el)=>(el.id===item.id ? {...el, count:el.count-1} : el))
+            setInCart(inCartCopy)
+            setCount(prevState=>prevState-1)
+            setTotal(total-(item.fields.price/100))
+        }
+    }
     return (
       <div className={toggle ? "show cart-overlay" : "cart-overlay"}>
         <aside className={toggle ? "show cart" : "cart"}>
@@ -37,16 +52,17 @@ function Cart({ closeCart, toggle, inCart, count, handleDelete, total }) {
                   <div>
                     <button
                       class="cart-item-increase-btn"
-                      data-id="rec8kkCmSiMkbkiko"
+                      data-id="rec8kkCmSiMkbkiko" onClick={()=>handleIncrement(item)}
                     >
                       <i class="fas fa-chevron-up"></i>
                     </button>
                     <p class="cart-item-amount" data-id="rec8kkCmSiMkbkiko">
-                      1
+                      {item.count}
                     </p>
                     <button
                       class="cart-item-decrease-btn"
                       data-id="rec8kkCmSiMkbkiko"
+                      onClick={()=>handleDecrement(item)}
                     >
                       <i class="fas fa-chevron-down"></i>
                     </button>
@@ -57,7 +73,7 @@ function Cart({ closeCart, toggle, inCart, count, handleDelete, total }) {
           </div>
           {/* footer */}
           <footer>
-            <h3 className="cart-total text-slanted">total : ${total.toFixed(2)}</h3>
+            <h3 className="cart-total text-slanted">total : ${Math.abs(total.toFixed(2))}</h3>
             <button className="cart-checkout btn">checkout</button>
           </footer>
         </aside>

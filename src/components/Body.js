@@ -4,14 +4,22 @@ import Main from "./Main";
 function Body({ handleAddToCart,handleCategory,products,filteredProducts}) {
     const [range,setRange]=useState(50)
     const [filterByRange,setFilterByRange]=([])
+    const [searchVal,setSearchVal]=useState('')
 
     const filterRange=()=>{
-      
-      const productsCopy = filteredProducts.map((item)=>({...item}))
+      const productsCopy = search().map((item)=>({...item}))
       const newProducts = productsCopy.filter((item) => (item.fields.price/100) < parseInt(range, 10));
      return newProducts
     }
-
+console.log(searchVal)
+const handleSearch=(e)=>{
+    setSearchVal(e.target.value)
+}
+const search=()=>{
+    const searchResult=filteredProducts.filter((el)=> el.fields.name.includes(searchVal.toLowerCase()))
+    console.log(searchResult)
+    return searchResult;
+}
 
     const handleRange=(e)=>{
         setRange(e.target.value)
@@ -23,7 +31,7 @@ function Body({ handleAddToCart,handleCategory,products,filteredProducts}) {
         <div class="filters-container">
           {/* search */}
           <form class="input-form">
-            <input type="text" class="search-input" placeholder="search..." />
+            <input type="text" class="search-input" value={searchVal} placeholder="search..." onChange={handleSearch} />
           </form>
           {/* categories */}
           <h4>Company</h4>
@@ -51,7 +59,7 @@ function Body({ handleAddToCart,handleCategory,products,filteredProducts}) {
       </div>
       {/* products */}
       <div class="products-container">
-        <Main handleAddCart={handleAddToCart} filteredProducts={filteredProducts} filterByRange={filterByRange} products={products} filterRange={filterRange} range={range}/>
+        <Main handleAddCart={handleAddToCart} filteredProducts={filteredProducts} filterByRange={filterByRange} products={products} filterRange={filterRange} range={range} search={search}/>
       </div>
     </section>
   );

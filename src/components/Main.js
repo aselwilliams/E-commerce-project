@@ -1,7 +1,7 @@
 // import { useState } from "react";
 // import { data } from "../products";
 
-const Main = ({ handleAddCart,filteredProducts,filterByRange,products,filterRange,range }) => {
+const Main = ({ handleAddCart,filteredProducts,filterByRange,products,filterRange,range,search }) => {
   return (
     <>
       {filterRange().map((item) => {

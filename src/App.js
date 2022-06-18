@@ -21,6 +21,8 @@ function App() {
   const handleAddToCart = (id) => {
     setToggle(true);
     const newItem = products.find((item) => item.id === id);
+    newItem.count=1;
+    console.log(newItem, 'newItem')
     if (!inCart.includes(newItem)) {
       setInCart([...inCart, newItem]);
       setCount((prevState) => prevState + 1);
@@ -53,7 +55,7 @@ function App() {
     }
   };
 
-
+console.log(products)
   useEffect(() => {
     setFilteredProducts(products);
   },[]);
@@ -82,14 +84,19 @@ function App() {
       <Cart
         closeCart={closeCart}
         toggle={toggle}
-        inCart={inCart}
+      
         count={count}
         handleDelete={handleDelete}
         total={total}
+        products={products}
+        inCart={inCart}
+        setInCart={setInCart}
+        setTotal={setTotal}
+        setCount={setCount}
       />
 
       {/* products */}
-      <Body handleAddToCart={handleAddToCart} handleCategory={handleCategory} filteredProducts={filteredProducts} products={products}/>
+      <Body handleAddToCart={handleAddToCart} handleCategory={handleCategory} filteredProducts={filteredProducts} products={products} />
     </div>
   );
 }
