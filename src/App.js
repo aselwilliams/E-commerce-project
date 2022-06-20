@@ -7,6 +7,14 @@ import NavBar from "./components/NavBar";
 import Body from "./components/Body";
 import SideBar from "./components/SideBar";
 import { data } from "./products";
+import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
+import Home from './pages/Home';
+import About from './pages/About';
+
+const getFeatured=()=>{
+  let sliced=data.slice(0,3)
+  return sliced
+}  
 
 function App() {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,8 +24,11 @@ function App() {
   const [total, setTotal] = useState(0);
   const [products,setProducts]=useState(data)
   const [filteredProducts,setFilteredProducts]=useState([])
+  const [featured,setFeatured]=useState(getFeatured())
   console.log(inCart, "inCart");
 
+
+console.log(featured, 'featured')
   const handleAddToCart = (id) => {
     setToggle(true);
     const newItem = products.find((item) => item.id === id);
@@ -72,15 +83,24 @@ console.log(products)
   };
   
   return (
+    
     <div className="App">
+    <Router>
+    
       <Loading isLoading={isLoading} />
-
+      
       <NavBar handleToggleCart={handleToggleCart} count={count} />
+      <Routes>
+      {/* <Hero /> */}
 
-      <Hero />
+      {/* <SideBar /> */}
 
-      <SideBar />
+      <Route path='/' element={<Home featured={featured}/>}/>
 
+      {/* products */}
+      <Route path='/products' element={<Body handleAddToCart={handleAddToCart} handleCategory={handleCategory} filteredProducts={filteredProducts} products={products} />}/>
+      <Route path='/about' element={<About />}/>
+      </Routes>
       <Cart
         closeCart={closeCart}
         toggle={toggle}
@@ -94,9 +114,7 @@ console.log(products)
         setTotal={setTotal}
         setCount={setCount}
       />
-
-      {/* products */}
-      <Body handleAddToCart={handleAddToCart} handleCategory={handleCategory} filteredProducts={filteredProducts} products={products} />
+      </Router>
     </div>
   );
 }

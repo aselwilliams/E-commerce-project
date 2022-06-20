@@ -99,6 +99,12 @@ p {
   margin-bottom: 1.25rem;
   color: var(--clr-grey-5);
 }
+.active{
+  background-color: skyblue;
+  border-radius:8px;
+  padding:5px;
+  /* color: #fff; */
+}
 @media screen and (min-width: 800px) {
   h1 {
     font-size: 4rem;
@@ -177,7 +183,9 @@ p {
 Navbar
 ===============
 */
-
+.nav-link {
+  color:white;
+}
 .navbar {
   height: 6rem;
   background: transparent;
@@ -258,7 +266,8 @@ Navbar
   }
   .nav-link {
     color: var(--clr-white);
-    margin-right: 3rem;
+    /* margin-right: 3rem; */
+    margin:2rem;
     letter-spacing: var(--spacing);
     transition: var(--transition);
     font-size: 1.25rem;
@@ -282,24 +291,28 @@ Navbar
 .page .toggle-cart {
   color: var(--clr-grey-1);
 }
-/*
+
 =============== 
 Hero
 ===============
-*/
-/*
+
 .hero {
-  min-height: 100vh;
-  margin-top: -6rem;
-  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url(./images/main-bcg.jpeg) center/cover;
-  display: grid;
-  place-items: center;
-  color: var(--clr-white);
+  height: 100vh;
+
 }
 .hero-container {
-  width: 90vw;
-  max-width: var(--max-width);
+  min-height:100vh;
+  /* max-width: var(--max-width); */
+  width:100vw;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+  url('https://images.pexels.com/photos/6585598/pexels-photo-6585598.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1') center/cover;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  color: var(--clr-white);
+  margin-top: -6rem;
 }
 .hero h1 {
   font-weight: 700;
@@ -342,12 +355,11 @@ Hero
     margin: 1.5rem 0;
   }
 }
-*/
-/*
+
 =============== 
 Sidebar
 ===============
-*/
+
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -404,7 +416,7 @@ Sidebar
     display: none;
   }
 }
-/*
+
 =============== 
 Cart
 ===============
