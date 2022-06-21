@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 
-const Products = ({ filteredProducts, handleAddCart }) => {
+const Products = ({ filteredProducts, handleAddToCart }) => {
   const { itemId } = useParams();
   return (
     <>
@@ -38,7 +38,7 @@ const Products = ({ filteredProducts, handleAddCart }) => {
                       chillwave iPhone taiyaki trust fund hashtag kinfolk
                       microdosing gochujang live-edge
                     </p>
-                    <button onClick={() => handleAddCart(item.id)} className="addToCartBtn btn" data-id="id">
+                    <button onClick={() => handleAddToCart(item.id)} className="addToCartBtn btn" data-id="id">
                       add to cart
                     </button>
                   </div>

@@ -100,12 +100,12 @@ console.log(products)
 
       {/* <SideBar /> */}
 
-      <Route path='/' element={<Home featured={featured}/>}/>
+      <Route path='/' element={<Home featured={featured} handleAddToCart={handleAddToCart} />}/>
 
       {/* products */}
       <Route exact path='/products' element={<Body handleAddToCart={handleAddToCart} 
       handleCategory={handleCategory} filteredProducts={filteredProducts} products={products} />}/>
-      <Route path='/products/:itemId' element={<Products handleAddCart={handleAddToCart}  filteredProducts={filteredProducts} />} />
+      <Route path='/products/:itemId' element={<Products handleAddToCart={handleAddToCart}  filteredProducts={filteredProducts} />} />
       <Route path='/about' element={<About />}/>
       </Routes>
        <Cart

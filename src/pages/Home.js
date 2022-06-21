@@ -1,7 +1,7 @@
 import React from 'react';
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Link} from 'react-router-dom'
 
-const Home = ({featured}) => {
+const Home = ({featured, handleAddToCart}) => {
 const navigate=useNavigate()
 
 const navigateToProducts=()=>{
@@ -33,12 +33,25 @@ const navigateToProducts=()=>{
             <img src={item.fields.image[0].thumbnails.large.url} className="product-img img" alt={item.fields.name}/>
            
             <div className="product-icons">
-              <a href="product.html?id=rec43w3ipXvP28vog" className="product-icon">
+            <Link
+                  to={`/products/${item.id}`}
+                  class="product-icon"
+                >
+                  <i class="fas fa-search"></i>
+                </Link>
+              {/* <a href="product.html?id=rec43w3ipXvP28vog" className="product-icon">
                 <i className="fas fa-search"></i>
-              </a>
-              <button className="product-cart-btn product-icon" data-id="rec43w3ipXvP28vog">
+              </a> */}
+              <button
+                  onClick={() => handleAddToCart(item.id)}
+                  class="product-cart-btn product-icon "
+                  data-id="rec43w3ipXvP28vog"
+                >
+                  <i class="fas fa-shopping-cart"></i>
+                </button>
+              {/* <button className="product-cart-btn product-icon" data-id="rec43w3ipXvP28vog">
                 <i className="fas fa-shopping-cart"></i>
-              </button>
+              </button> */}
             </div>
           </div>
           <footer>
