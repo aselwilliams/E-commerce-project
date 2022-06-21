@@ -1,5 +1,6 @@
 // import { useState } from "react";
 // import { data } from "../products";
+import {Link} from 'react-router-dom'
 
 const Main = ({ handleAddCart,filteredProducts,filterByRange,products,filterRange,range,search }) => {
   return (
@@ -16,12 +17,12 @@ const Main = ({ handleAddCart,filteredProducts,filterByRange,products,filterRang
               />
               <p>{item.fields.name}</p>
               <div class="product-icons">
-                <a
-                  href="product.html?id=rec43w3ipXvP28vog"
+                <Link
+                  to={`/products/${item.id}`}
                   class="product-icon"
                 >
                   <i class="fas fa-search"></i>
-                </a>
+                </Link>
                 <button
                   onClick={() => handleAddCart(item.id)}
                   class="product-cart-btn product-icon "

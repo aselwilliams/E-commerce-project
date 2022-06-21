@@ -10,6 +10,7 @@ import { data } from "./products";
 import {BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
+import Products from "./pages/Products";
 
 const getFeatured=()=>{
   let sliced=data.slice(0,3)
@@ -98,7 +99,9 @@ console.log(products)
       <Route path='/' element={<Home featured={featured}/>}/>
 
       {/* products */}
-      <Route path='/products' element={<Body handleAddToCart={handleAddToCart} handleCategory={handleCategory} filteredProducts={filteredProducts} products={products} />}/>
+      <Route exact path='/products' element={<Body handleAddToCart={handleAddToCart} 
+      handleCategory={handleCategory} filteredProducts={filteredProducts} products={products} />}/>
+      <Route path='/products/:itemId' element={<Products handleAddCart={handleAddToCart}  filteredProducts={filteredProducts} />} />
       <Route path='/about' element={<About />}/>
       </Routes>
       <Cart
