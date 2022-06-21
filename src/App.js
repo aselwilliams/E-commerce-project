@@ -90,7 +90,11 @@ console.log(products)
     
       <Loading isLoading={isLoading} />
       
-      <NavBar handleToggleCart={handleToggleCart} count={count} />
+      <NavBar handleToggleCart={handleToggleCart} count={count} 
+        closeCart={closeCart}
+        toggle={toggle}
+      />
+      
       <Routes>
       {/* <Hero /> */}
 
@@ -104,7 +108,7 @@ console.log(products)
       <Route path='/products/:itemId' element={<Products handleAddCart={handleAddToCart}  filteredProducts={filteredProducts} />} />
       <Route path='/about' element={<About />}/>
       </Routes>
-      <Cart
+       <Cart
         closeCart={closeCart}
         toggle={toggle}
       
@@ -118,6 +122,7 @@ console.log(products)
         setCount={setCount}
       />
       </Router>
+     
     </div>
   );
 }

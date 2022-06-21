@@ -15,7 +15,7 @@ function Cart({ closeCart, toggle, inCart, count, handleDelete, total,products,s
         }
     }
     return (
-      <div className={toggle ? "show cart-overlay" : "cart-overlay"}>
+      <div className={toggle ? "show cart-overlay cart" : "cart-overlay cart"}>
         <aside className={toggle ? "show cart" : "cart"}>
           <button className="cart-close" onClick={closeCart}>
             X {/* <i className="fas fa-times"></i> */}
