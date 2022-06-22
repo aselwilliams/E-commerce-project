@@ -4,14 +4,14 @@ function Cart({ closeCart, toggle, inCart, count, handleDelete, total,products,s
     const inCartCopy=inCart.map((el)=>(el.id===item.id ? {...el, count:el.count+1} : el))
     setInCart(inCartCopy)
     setCount(prevState=>prevState+1)
-    setTotal(total+(item.fields.price/100))
+    // setTotal(total+(item.fields.price/100))
     }
     const handleDecrement=(item)=>{
         if(item.count>1){
             const inCartCopy=inCart.map((el)=>(el.id===item.id ? {...el, count:el.count-1} : el))
             setInCart(inCartCopy)
             setCount(prevState=>prevState-1)
-            setTotal(total-(item.fields.price/100))
+            // setTotal(total-(item.fields.price/100))
         }
     }
     return (

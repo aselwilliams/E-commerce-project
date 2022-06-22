@@ -17,19 +17,69 @@ const getFeatured=()=>{
   return sliced
 }  
 
+
+const getInitialCart=JSON.parse(localStorage.getItem('initialCart'))
+
+const initialState=getInitialCart ? getInitialCart : []
+
 function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [toggle, setToggle] = useState(false);
-  const [inCart, setInCart] = useState([]);
-  const [count, setCount] = useState(0);
+  const [inCart, setInCart] = useState(initialState);
+  const [count, setCount] = useState(getInitialCart ? getInitialCart.length : 0);
   const [total, setTotal] = useState(0);
   const [products,setProducts]=useState(data)
   const [filteredProducts,setFilteredProducts]=useState([])
   const [featured,setFeatured]=useState(getFeatured())
   console.log(inCart, "inCart");
 
+// useEffect(()=>{
+//         localStorage.setItem("expenseHistory", JSON.stringify(history));
+//         let totalincome = 0;
+//         let totalexpense = 0;
+//         let totalBalance = 0;            
+//           for (let i=0; i < history.length; i++){
+//               totalBalance += Number(history[i].amount)
+//               if (history[i].amount > 0) {
+//                 totalincome += Number(history[i].amount) 
+//               } else if(history[i].amount < 0) {
+//                 totalexpense += Number(history[i].amount)
+//               } 
+//         }
+//         setIncome(totalincome); 
+//         setExpense(totalexpense);
+//         setTotalBalance(totalBalance); 
+
+//     },[history]);
+// useEffect(() => {
+//     const newHistory = JSON.parse(sessionStorage.getItem("saved-data"));
+//     if (newHistory) {
+//       setHistory(newHistory);
+//     }
+//   }, []);
+
+
+useEffect(()=>{
+  localStorage.setItem('initialCart', JSON.stringify(inCart))
+  let totalAmount=0;
+  let totalWithCount=0;
+   setTotal(totalAmount);
+   let elItem=inCart.map((el)=>{
+      if(el.count>1){
+      let newAmount = el.count*(el.fields.price/100)
+     setTotal(newAmount)
+  } else {
+    totalAmount = total + el.fields.price/100
+    setTotal(totalAmount)
+  }
+})
+     
+   
+},[inCart])
+
 
 console.log(featured, 'featured')
+
   const handleAddToCart = (id) => {
     setToggle(true);
     const newItem = products.find((item) => item.id === id);
@@ -39,11 +89,11 @@ console.log(featured, 'featured')
       setInCart([...inCart, newItem]);
       setCount((prevState) => prevState + 1);
     }
-    if (count === 0) {
-      setTotal((newItem.fields.price / 100) * 1);
-    } else {
-      setTotal(total + (newItem.fields.price / 100) * 1);
-    }
+    // if (count === 0) {
+    //   setTotal((newItem.fields.price / 100) * 1);
+    // } else {
+    //   setTotal(total + (newItem.fields.price / 100) * 1);
+    // }
   };
   
 
