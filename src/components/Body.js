@@ -1,65 +1,145 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { useDispatch } from "react-redux";
+import {
+  searchFilter,
+  filterCategory,
+  filterByRange
+} from "../reducers/ProductsSlice";
+import "../App.css";
 
 import Main from "./Main";
-function Body({ handleAddToCart,handleCategory,products,filteredProducts}) {
-    const [range,setRange]=useState(50)
-    const [filterByRange,setFilterByRange]=([])
-    const [searchVal,setSearchVal]=useState('')
+function Body() {
+  const dispatch = useDispatch();
+  const [range, setRange] = useState(50);
+  const [searchVal, setSearchVal] = useState("");
+  console.log(range);
 
-    const filterRange=()=>{
-      const productsCopy = search().map((item)=>({...item}))
-      const newProducts = productsCopy.filter((item) => (item.fields.price/100) < parseInt(range, 10));
-     return newProducts
-    }
-console.log(searchVal)
-const handleSearch=(e)=>{
-    setSearchVal(e.target.value)
-}
-const search=()=>{
-    const searchResult=filteredProducts.filter((el)=> el.fields.name.includes(searchVal.toLowerCase()))
-    console.log(searchResult)
-    return searchResult;
-}
+  let btnRefA = useRef(null);
+  let btnRefI = useRef(null);
+  let btnRefL = useRef(null);
+  let btnRefM = useRef(null);
+  let btnRefC = useRef(null);
 
-    const handleRange=(e)=>{
-        setRange(e.target.value)
+  const handleSearch = (e) => {
+    setSearchVal(e.target.value);
+    dispatch(searchFilter(e.target.value));
+  };
+
+  const handleCategory = (category, e) => {
+    dispatch(filterCategory(category));
+    if (btnRefA.current.innerHTML === category) {
+      btnRefA.current.classList = "company-btn active-btn";
+      btnRefL.current.classList = "company-btn";
+      btnRefM.current.classList = "company-btn";
+      btnRefC.current.classList = "company-btn";
+      btnRefI.current.classList = "company-btn";
     }
+    if (btnRefI.current.innerHTML === category) {
+      btnRefI.current.classList = "company-btn active-btn";
+      btnRefL.current.classList = "company-btn";
+      btnRefM.current.classList = "company-btn";
+      btnRefC.current.classList = "company-btn";
+      btnRefA.current.classList = "company-btn";
+    }
+    if (btnRefL.current.innerHTML === category) {
+      btnRefL.current.classList = "company-btn active-btn";
+      btnRefA.current.classList = "company-btn";
+      btnRefM.current.classList = "company-btn";
+      btnRefC.current.classList = "company-btn";
+      btnRefI.current.classList = "company-btn";
+    }
+    if (btnRefM.current.innerHTML === category) {
+      btnRefM.current.classList = "company-btn active-btn";
+      btnRefL.current.classList = "company-btn";
+      btnRefA.current.classList = "company-btn";
+      btnRefC.current.classList = "company-btn";
+      btnRefI.current.classList = "company-btn";
+    }
+    if (btnRefC.current.innerHTML === category) {
+      btnRefC.current.classList = "company-btn active-btn";
+      btnRefL.current.classList = "company-btn";
+      btnRefM.current.classList = "company-btn";
+      btnRefA.current.classList = "company-btn";
+      btnRefI.current.classList = "company-btn";
+    }
+  };
+
+  const handleRange = (e) => {
+    setRange(e.target.value);
+    dispatch(filterByRange(range));
+  };
   return (
-    <section class="products">
+    <section className="products">
       {/* filters */}
-      <div class="filters">
-        <div class="filters-container">
+      <div className="filters">
+        <div className="filters-container">
           {/* search */}
-          <form class="input-form">
-            <input type="text" class="search-input" value={searchVal} placeholder="search..." onChange={handleSearch} />
+          <form className="input-form">
+            <input
+              type="text"
+              className="search-input"
+              value={searchVal}
+              placeholder="search..."
+              onChange={handleSearch}
+            />
           </form>
           {/* categories */}
           <h4>Company</h4>
-          <article class="companies">
-            <button onClick={()=>handleCategory('all')} class="company-btn">all</button>
-            <button onClick={()=>handleCategory('ikea')} class="company-btn">ikea</button>
-            <button onClick={()=>handleCategory('liddy')}class="company-btn">liddy</button>
-            <button onClick={()=>handleCategory('marcos')} class="company-btn">marcos</button>
-            <button onClick={()=>handleCategory('caressa')} class="company-btn">caressa</button>
+          <article className="companies">
+            <button
+              ref={btnRefA}
+              onClick={(e) => handleCategory("all", e)}
+              className="company-btn"
+            >
+              all
+            </button>
+            <button
+              ref={btnRefI}
+              onClick={(e) => handleCategory("ikea", e)}
+              className="company-btn"
+            >
+              ikea
+            </button>
+            <button
+              ref={btnRefL}
+              onClick={(e) => handleCategory("liddy", e)}
+              className="company-btn"
+            >
+              liddy
+            </button>
+            <button
+              ref={btnRefM}
+              onClick={(e) => handleCategory("marcos", e)}
+              className="company-btn"
+            >
+              marcos
+            </button>
+            <button
+              ref={btnRefC}
+              onClick={(e) => handleCategory("caressa", e)}
+              className="company-btn"
+            >
+              caressa
+            </button>
           </article>
           {/* price */}
           <h4>Price</h4>
-          <form class="price-form">
+          <form className="price-form">
             <input
               type="range"
-              class="price-filter"
+              className="price-filter"
               min="0"
               value={range}
               max="100"
               onChange={handleRange}
             />
           </form>
-          <p class="price-value">Value: ${range}</p>
+          <p className="price-value">Value: ${range}</p>
         </div>
       </div>
-      {/* products */}
-      <div class="products-container">
-        <Main handleAddCart={handleAddToCart} filteredProducts={filteredProducts} filterByRange={filterByRange} products={products} filterRange={filterRange} range={range} search={search}/>
+      <div className="products-container">
+        {/* <h3 class="filter-error">sorry, no products matched your search</h3> */}
+        <Main />
       </div>
     </section>
   );

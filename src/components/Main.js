@@ -1,34 +1,38 @@
-// import { useState } from "react";
-// import { data } from "../products";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { allProducts } from "../reducers/ProductsSlice";
+import { openCart } from "../reducers/ToggleCartSlice";
+import { addToCart } from "../reducers/CartSlice";
 
-const Main = ({ handleAddCart,filteredProducts,filterByRange,products,filterRange,range,search }) => {
+const Main = () => {
+  const stateProducts = useSelector(allProducts);
+  const dispatch = useDispatch();
+
   return (
     <>
-      {filterRange().map((item) => {
-       
+      {stateProducts.map((item) => {
         return (
           <article className="product" key={item.id}>
-            <div class="product-container">
+            <div className="product-container">
               <img
                 src={item.fields.image[0].thumbnails.large.url}
                 className="product-img img"
                 alt={item.fields.name}
               />
               <p>{item.fields.name}</p>
-              <div class="product-icons">
-                <Link
-                  to={`/products/${item.id}`}
-                  class="product-icon"
-                >
-                  <i class="fas fa-search"></i>
+              <div className="product-icons">
+                <Link to={`/products/${item.id}`} className="product-icon">
+                  <i className="fas fa-search"></i>
                 </Link>
                 <button
-                  onClick={() => handleAddCart(item.id)}
-                  class="product-cart-btn product-icon "
+                  onClick={() => {
+                    dispatch(openCart());
+                    dispatch(addToCart(item.id));
+                  }}
+                  className="product-cart-btn product-icon "
                   data-id="rec43w3ipXvP28vog"
                 >
-                  <i class="fas fa-shopping-cart"></i>
+                  <i className="fas fa-shopping-cart"></i>
                 </button>
               </div>
               <footer>

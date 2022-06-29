@@ -1,11 +1,21 @@
-import React from "react";
 import { useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { openCart } from "../reducers/ToggleCartSlice";
+import { addToCart } from "../reducers/CartSlice";
+import { data } from "../products";
 
-const Products = ({ filteredProducts, handleAddToCart }) => {
+const Products = () => {
+  const dispatch = useDispatch();
+
+  const handleAddCart = (id) => {
+    dispatch(openCart());
+    dispatch(addToCart(id));
+  };
+
   const { itemId } = useParams();
   return (
     <>
-      {filteredProducts.map((item) => {
+      {data.slice(0, 3).map((item) => {
         if (item.id === itemId) {
           return (
             <section className="single-product">
@@ -17,17 +27,21 @@ const Products = ({ filteredProducts, handleAddToCart }) => {
                 <article className="single-product-info">
                   <div>
                     <h2 className="single-product-title">{item.fields.name}</h2>
-                    <p className="single-product-company text-slanted">by {item.fields.company}</p>
-                    <p className="single-product-price">${item.fields.price / 100}</p>
+                    <p className="single-product-company text-slanted">
+                      by {item.fields.company}
+                    </p>
+                    <p className="single-product-price">
+                      ${item.fields.price / 100}
+                    </p>
                     <div className="single-product-colors">
-                      <span
-                        className="product-color"
-                        style={{backgroundColor: 'rgb(241, 80, 37)'}}
-                      ></span>
-                      <span
-                        className="product-color"
-                        style={{backgroundColor: 'rgb(34, 34, 34)'}}
-                      ></span>
+                      {item.fields.colors.map((el) => {
+                        return (
+                          <span
+                            className="product-color"
+                            style={{ backgroundColor: el }}
+                          ></span>
+                        );
+                      })}
                     </div>
                     <p className="single-product-desc">
                       Cloud bread VHS hell of banjo bicycle rights jianbing
@@ -38,7 +52,11 @@ const Products = ({ filteredProducts, handleAddToCart }) => {
                       chillwave iPhone taiyaki trust fund hashtag kinfolk
                       microdosing gochujang live-edge
                     </p>
-                    <button onClick={() => handleAddToCart(item.id)} className="addToCartBtn btn" data-id="id">
+                    <button
+                      onClick={() => handleAddCart(item.id)}
+                      className="addToCartBtn btn"
+                      data-id="id"
+                    >
                       add to cart
                     </button>
                   </div>
