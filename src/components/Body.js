@@ -25,7 +25,7 @@ function Body() {
     dispatch(searchFilter(e.target.value));
   };
 
-  const handleCategory = (category, e) => {
+  const handleCategory = (category) => {
     dispatch(filterCategory(category));
     if (btnRefA.current.innerHTML === category) {
       btnRefA.current.classList = "company-btn active-btn";
@@ -88,35 +88,35 @@ function Body() {
           <article className="companies">
             <button
               ref={btnRefA}
-              onClick={(e) => handleCategory("all", e)}
+              onClick={() => handleCategory("all")}
               className="company-btn"
             >
               all
             </button>
             <button
               ref={btnRefI}
-              onClick={(e) => handleCategory("ikea", e)}
+              onClick={() => handleCategory("ikea")}
               className="company-btn"
             >
               ikea
             </button>
             <button
               ref={btnRefL}
-              onClick={(e) => handleCategory("liddy", e)}
+              onClick={() => handleCategory("liddy")}
               className="company-btn"
             >
               liddy
             </button>
             <button
               ref={btnRefM}
-              onClick={(e) => handleCategory("marcos", e)}
+              onClick={() => handleCategory("marcos")}
               className="company-btn"
             >
               marcos
             </button>
             <button
               ref={btnRefC}
-              onClick={(e) => handleCategory("caressa", e)}
+              onClick={() => handleCategory("caressa")}
               className="company-btn"
             >
               caressa

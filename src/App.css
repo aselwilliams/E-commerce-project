@@ -791,5 +791,6 @@ Single Product Page
   background: var(--clr-primary-5);
   border-color: transparent;
   color: var(--clr-white);
-  border-radius: 12px;
+  border-radius: 10px;
+  padding:5px;
 }

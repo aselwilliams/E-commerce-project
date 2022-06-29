@@ -6,7 +6,13 @@ import toggleNavReducer from "./reducers/ToggleNavSlice";
 import isLoadingReducer from "./reducers/IsLoadingSlice";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
-import { persistReducer, persistStore } from "redux-persist";
+import { persistReducer, persistStore,  FLUSH,
+  REHYDRATE,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER
+ } from "redux-persist";
 
 const persistConfig = {
   key: "root",
@@ -23,6 +29,12 @@ const allReducers = combineReducers({
 const persistedReducer = persistReducer(persistConfig, allReducers);
 
 export const store = configureStore({
-  reducer: persistedReducer
+  reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER]
+      }
+    })
 });
 export const persistor = persistStore(store);
