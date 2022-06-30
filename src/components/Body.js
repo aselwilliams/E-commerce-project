@@ -1,66 +1,35 @@
-import { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   searchFilter,
   filterCategory,
-  filterByRange
+  filterByRange,
+  allProducts
 } from "../reducers/ProductsSlice";
 import "../App.css";
-
 import Main from "./Main";
+
 function Body() {
+  const products = useSelector(allProducts);
+  console.log(products.length, "");
   const dispatch = useDispatch();
   const [range, setRange] = useState(50);
   const [searchVal, setSearchVal] = useState("");
-  console.log(range);
-
-  let btnRefA = useRef(null);
-  let btnRefI = useRef(null);
-  let btnRefL = useRef(null);
-  let btnRefM = useRef(null);
-  let btnRefC = useRef(null);
 
   const handleSearch = (e) => {
     setSearchVal(e.target.value);
     dispatch(searchFilter(e.target.value));
   };
 
-  const handleCategory = (category) => {
+  const handleCategory = (category, e) => {
     dispatch(filterCategory(category));
-    if (btnRefA.current.innerHTML === category) {
-      btnRefA.current.classList = "company-btn active-btn";
-      btnRefL.current.classList = "company-btn";
-      btnRefM.current.classList = "company-btn";
-      btnRefC.current.classList = "company-btn";
-      btnRefI.current.classList = "company-btn";
-    }
-    if (btnRefI.current.innerHTML === category) {
-      btnRefI.current.classList = "company-btn active-btn";
-      btnRefL.current.classList = "company-btn";
-      btnRefM.current.classList = "company-btn";
-      btnRefC.current.classList = "company-btn";
-      btnRefA.current.classList = "company-btn";
-    }
-    if (btnRefL.current.innerHTML === category) {
-      btnRefL.current.classList = "company-btn active-btn";
-      btnRefA.current.classList = "company-btn";
-      btnRefM.current.classList = "company-btn";
-      btnRefC.current.classList = "company-btn";
-      btnRefI.current.classList = "company-btn";
-    }
-    if (btnRefM.current.innerHTML === category) {
-      btnRefM.current.classList = "company-btn active-btn";
-      btnRefL.current.classList = "company-btn";
-      btnRefA.current.classList = "company-btn";
-      btnRefC.current.classList = "company-btn";
-      btnRefI.current.classList = "company-btn";
-    }
-    if (btnRefC.current.innerHTML === category) {
-      btnRefC.current.classList = "company-btn active-btn";
-      btnRefL.current.classList = "company-btn";
-      btnRefM.current.classList = "company-btn";
-      btnRefA.current.classList = "company-btn";
-      btnRefI.current.classList = "company-btn";
+    const btns = e.target.parentElement.children;
+    for (let i = 0; i < btns.length; i++) {
+      if (btns[i].innerText.toLowerCase() === category) {
+        btns[i].classList.add("active-btn");
+      } else {
+        btns[i].classList.remove("active-btn");
+      }
     }
   };
 
@@ -87,36 +56,31 @@ function Body() {
           <h4>Company</h4>
           <article className="companies">
             <button
-              ref={btnRefA}
-              onClick={() => handleCategory("all")}
-              className="company-btn"
+              onClick={(e) => handleCategory("all", e)}
+              className="company-btn active-btn"
             >
               all
             </button>
             <button
-              ref={btnRefI}
-              onClick={() => handleCategory("ikea")}
+              onClick={(e) => handleCategory("ikea", e)}
               className="company-btn"
             >
               ikea
             </button>
             <button
-              ref={btnRefL}
-              onClick={() => handleCategory("liddy")}
+              onClick={(e) => handleCategory("liddy", e)}
               className="company-btn"
             >
               liddy
             </button>
             <button
-              ref={btnRefM}
-              onClick={() => handleCategory("marcos")}
+              onClick={(e) => handleCategory("marcos", e)}
               className="company-btn"
             >
               marcos
             </button>
             <button
-              ref={btnRefC}
-              onClick={() => handleCategory("caressa")}
+              onClick={(e) => handleCategory("caressa", e)}
               className="company-btn"
             >
               caressa
@@ -138,7 +102,9 @@ function Body() {
         </div>
       </div>
       <div className="products-container">
-        {/* <h3 class="filter-error">sorry, no products matched your search</h3> */}
+        {products.length === 0 && (
+          <h3 class="filter-error">sorry, no products matched your search</h3>
+        )}
         <Main />
       </div>
     </section>

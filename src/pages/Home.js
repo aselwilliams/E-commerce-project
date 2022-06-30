@@ -13,11 +13,6 @@ const Home = () => {
     navigate("/products");
   };
 
-  const handleAddCart = (id) => {
-    dispatch(openCart());
-    dispatch(addToCart(id));
-  };
-
   return (
     <div>
       <section className="hero">
@@ -47,15 +42,18 @@ const Home = () => {
                   />
 
                   <div className="product-icons">
-                    <Link to={`/products/${item.id}`} class="product-icon">
-                      <i class="fas fa-search"></i>
+                    <Link to={`/products/${item.id}`} className="product-icon">
+                      <i className="fas fa-search"></i>
                     </Link>
                     <button
-                      onClick={() => handleAddCart(item.id)}
-                      class="product-cart-btn product-icon "
+                      onClick={() => {
+                        dispatch(openCart());
+                        dispatch(addToCart(item));
+                      }}
+                      className="product-cart-btn product-icon "
                       data-id="rec43w3ipXvP28vog"
                     >
-                      <i class="fas fa-shopping-cart"></i>
+                      <i className="fas fa-shopping-cart"></i>
                     </button>
                   </div>
                 </div>

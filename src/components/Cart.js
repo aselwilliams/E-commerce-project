@@ -3,7 +3,8 @@ import {
   selectCart,
   decrement,
   increment,
-  removeFromCart
+  removeFromCart,
+  popUpInfo
 } from "../reducers/CartSlice";
 import { toggleCart, closeCart } from "../reducers/ToggleCartSlice";
 
@@ -34,20 +35,20 @@ function Cart() {
           {inCart.map((item) => {
             return (
               <article
-                class="cart-item"
+                className="cart-item"
                 data-id="rec8kkCmSiMkbkiko"
                 key={item.id}
               >
                 <img
-                  src={item.fields.image[0].thumbnails.small.url}
-                  class="cart-item-img"
+                  src={item.fields.image[0].thumbnails.large.url}
+                  className="cart-item-img"
                   alt={item.fields.name}
                 />
                 <div>
-                  <h4 class="cart-item-name">{item.fields.name}</h4>
-                  <p class="cart-item-price">${item.fields.price / 100}</p>
+                  <h4 className="cart-item-name">{item.fields.name}</h4>
+                  <p className="cart-item-price">${item.fields.price / 100}</p>
                   <button
-                    class="cart-item-remove-btn"
+                    className="cart-item-remove-btn"
                     data-id="rec8kkCmSiMkbkiko"
                     onClick={() => dispatch(removeFromCart(item))}
                   >
@@ -57,17 +58,20 @@ function Cart() {
 
                 <div>
                   <button
-                    class="cart-item-increase-btn"
+                    className="cart-item-increase-btn"
                     data-id="rec8kkCmSiMkbkiko"
-                    onClick={() => dispatch(increment(item))}
+                    onClick={() => {
+                      dispatch(increment(item));
+                      dispatch(popUpInfo(item));
+                    }}
                   >
-                    <i class="fas fa-chevron-up"></i>
+                    <i className="fas fa-chevron-up"></i>
                   </button>
-                  <p class="cart-item-amount" data-id="rec8kkCmSiMkbkiko">
+                  <p className="cart-item-amount" data-id="rec8kkCmSiMkbkiko">
                     {item.count}
                   </p>
                   <button
-                    class="cart-item-decrease-btn"
+                    className="cart-item-decrease-btn"
                     data-id="rec8kkCmSiMkbkiko"
                     onClick={() => {
                       item.count <= 1
@@ -75,7 +79,7 @@ function Cart() {
                         : dispatch(decrement(item));
                     }}
                   >
-                    <i class="fas fa-chevron-down"></i>
+                    <i className="fas fa-chevron-down"></i>
                   </button>
                 </div>
               </article>

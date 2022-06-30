@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { toast } from "react-toastify";
 import { data } from "../products";
 
 const initialState = {
@@ -10,22 +11,34 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action) => {
-      console.log(state.inCart, "in");
-      let newItem = data.find((item) => item.id === action.payload);
+      let newItem = data.find((item) => item.id === action.payload.id);
       newItem = { ...newItem, count: 1 };
-      console.log(newItem, "newitem");
-
       if (!state.inCart.some((el) => el.id === newItem.id)) {
         state.inCart.unshift(newItem);
+        let name = action.payload.fields.name;
+        name = name.charAt(0).toUpperCase() + name.slice(1);
+        toast.success(`"${name}" added to cart`, {
+          position: "bottom-left"
+        });
       } else {
         let newArr = state.inCart.map((el) =>
           el.id === newItem.id ? { ...el, count: el.count + 1 } : el
         );
+        let name = action.payload.fields.name;
+        name = name.charAt(0).toUpperCase() + name.slice(1);
+        toast.info(`increased quantity of "${name}"`, {
+          position: "bottom-left"
+        });
         state.inCart = newArr;
       }
     },
     removeFromCart: (state, action) => {
       let newArr = state.inCart.filter((el) => el.id !== action.payload.id);
+      let name = action.payload.fields.name;
+      name = name.charAt(0).toUpperCase() + name.slice(1);
+      toast.error(`"${name}" removed from cart `, {
+        position: "bottom-left"
+      });
       state.inCart = newArr;
     },
     increment: (state, action) => {
@@ -38,6 +51,7 @@ export const cartSlice = createSlice({
       let newArr = state.inCart.map((el) =>
         el.id === action.payload.id ? { ...el, count: el.count - 1 } : el
       );
+
       state.inCart = newArr;
     }
   }
@@ -48,6 +62,8 @@ export const {
   addToCart,
   removeFromCart,
   increment,
-  decrement
+  decrement,
+  popUpInfo,
+  popUpSuccess
 } = cartSlice.actions;
 export default cartSlice.reducer;

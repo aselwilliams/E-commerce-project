@@ -6,18 +6,13 @@ import { data } from "../products";
 
 const Products = () => {
   const dispatch = useDispatch();
-
-  const handleAddCart = (id) => {
-    dispatch(openCart());
-    dispatch(addToCart(id));
-  };
-
   const { itemId } = useParams();
+
   return (
     <>
-      {data.slice(0, 3).map((item) => {
-        if (item.id === itemId) {
-          return (
+      {data.map(
+        (item) =>
+          item.id === itemId && (
             <section className="single-product">
               <div className="section-center single-product-center">
                 <img
@@ -53,7 +48,10 @@ const Products = () => {
                       microdosing gochujang live-edge
                     </p>
                     <button
-                      onClick={() => handleAddCart(item.id)}
+                      onClick={() => {
+                        dispatch(openCart());
+                        dispatch(addToCart(item));
+                      }}
                       className="addToCartBtn btn"
                       data-id="id"
                     >
@@ -63,9 +61,8 @@ const Products = () => {
                 </article>
               </div>
             </section>
-          );
-        }
-      })}
+          )
+      )}
     </>
   );
 };

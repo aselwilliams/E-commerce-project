@@ -7,7 +7,6 @@ const initialState = {
 };
 let filteredProducts = data;
 console.log(data);
-
 export const productsSlice = createSlice({
   name: "products",
   initialState,

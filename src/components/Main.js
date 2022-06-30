@@ -19,7 +19,6 @@ const Main = () => {
                 className="product-img img"
                 alt={item.fields.name}
               />
-              <p>{item.fields.name}</p>
               <div className="product-icons">
                 <Link to={`/products/${item.id}`} className="product-icon">
                   <i className="fas fa-search"></i>
@@ -27,7 +26,7 @@ const Main = () => {
                 <button
                   onClick={() => {
                     dispatch(openCart());
-                    dispatch(addToCart(item.id));
+                    dispatch(addToCart(item));
                   }}
                   className="product-cart-btn product-icon "
                   data-id="rec43w3ipXvP28vog"
