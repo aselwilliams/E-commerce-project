@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Cart from "./components/Cart";
 import SideBar from "./components/SideBar";
-// import Loading from "./components/Loading";
+import Loading from "./components/Loading";
 import NavBar from "./components/NavBar";
 import Body from "./components/Body";
 import Home from "./pages/Home";
@@ -15,7 +15,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        {/* <Loading /> */}
+        <Loading />
         <ToastContainer />
         <NavBar />
         <Routes>
